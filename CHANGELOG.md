@@ -1,9 +1,13 @@
-## 0.27.34-dev1
+## 0.27.34-dev2
 
 ### Enhancements
 
 - **Release consumed decode buffers before reconstructing original elements, preserving the 200 MiB decompressed-byte limit and existing malformed and trailing-data behavior.**
 - **Release decoded pages, crops and JPEG buffers promptly during figure extraction, and copy uploads with bounded reads. Preserve coordinate-derived crop geometry and starting-page numbering.**
+
+### Fixes
+
+- **Keep the languages a caller passes on short ASCII text.** `detect_languages()` assigned `["eng"]` to any ASCII text under five words before it looked at `languages`, so `partition_text(text="Bonjour le monde", languages=["fra"])` returned elements with `languages=["eng"]`, and with `detect_language_per_element=True` every short element of a French document did too. The English default and `language_fallback` now apply only to auto detection, the mode whose unreliability on short text they exist for.
 
 ## 0.27.33
 
